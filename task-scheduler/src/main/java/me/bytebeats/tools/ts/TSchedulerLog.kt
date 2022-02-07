@@ -1,4 +1,4 @@
-package me.bytebeats.tools.taskscheduler
+package me.bytebeats.tools.ts
 
 import android.util.Log
 
@@ -8,7 +8,7 @@ import android.util.Log
  * Quote: Peasant. Educated. Worker
  */
 
-typealias Options = TaskSchedulerOptions
+typealias Options = TSchedulerOptions
 
 interface TaskSchedulerLog {
     fun d(tag: String?, any: Any)

@@ -1,4 +1,4 @@
-package me.bytebeats.tools.taskscheduler
+package me.bytebeats.tools.ts
 
 import org.junit.Test
 

@@ -1,4 +1,4 @@
-package me.bytebeats.tools.taskscheduler
+package me.bytebeats.tools.ts
 
 import android.app.Application
 import java.util.concurrent.*
@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * E-mail: happychinapc@gmail.com
  * Quote: Peasant. Educated. Worker
  */
-interface TaskSchedulerOptions {
+interface TSchedulerOptions {
     /**
      * Log switch, by default true
      */
@@ -53,7 +53,7 @@ interface TaskSchedulerOptions {
 
     var context: Application?
 
-    companion object : TaskSchedulerOptions {
+    companion object : TSchedulerOptions {
         private var sIsLoggable = true
         private var mCoreNumber: Int = Runtime.getRuntime().availableProcessors()
         private var mThreadFactory: ThreadFactory? = null

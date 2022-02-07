@@ -1,4 +1,4 @@
-package me.bytebeats.tools.taskscheduler.app.ui.theme
+package me.bytebeats.tools.ts.app.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

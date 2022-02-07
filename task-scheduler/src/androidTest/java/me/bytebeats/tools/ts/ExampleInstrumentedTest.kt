@@ -1,4 +1,4 @@
-package me.bytebeats.tools.taskscheduler
+package me.bytebeats.tools.ts
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
