@@ -104,7 +104,7 @@ abstract class Task @JvmOverloads constructor(
         }
         switchState(State.WAIT)
         if (isMainTask) {
-            mainHandler.post(this)
+            mainTaskHandler.post(this)
         } else {
             taskExecutor.execute(this)
         }
@@ -216,7 +216,7 @@ abstract class Task @JvmOverloads constructor(
         const val DEFAULT_TASK_PRIORITY = 0
         private val taskExecutor: ExecutorService
             get() = TSchedulerOptions.executor
-        private val mainHandler: Handler
+        private val mainTaskHandler: Handler
             get() = Handler(Looper.getMainLooper())
     }
 

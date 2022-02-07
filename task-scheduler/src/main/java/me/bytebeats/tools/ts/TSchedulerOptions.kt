@@ -53,6 +53,8 @@ interface TSchedulerOptions {
 
     var context: Application?
 
+    val toastWarningAvailable: Boolean
+
     companion object : TSchedulerOptions {
         private var sIsLoggable = true
         private var mCoreNumber: Int = Runtime.getRuntime().availableProcessors()
@@ -142,6 +144,9 @@ interface TSchedulerOptions {
             mContext = context
             sIsToastWarningEnabled = enabledToastWarning
         }
+
+        override val toastWarningAvailable: Boolean
+            get() = isToastWarningEnabled && context != null
 
         override var context: Application?
             get() = mContext
