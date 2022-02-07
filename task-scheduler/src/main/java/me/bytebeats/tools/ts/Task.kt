@@ -217,7 +217,7 @@ abstract class Task @JvmOverloads constructor(
     companion object {
         const val DEFAULT_TASK_PRIORITY = 0
         private val taskExecutor: ExecutorService
-            get() = TSchedulerOptions.executor
+            get() = SchedulerOptions.executor
         private val mainTaskHandler: Handler
             get() = Handler(Looper.getMainLooper())
     }

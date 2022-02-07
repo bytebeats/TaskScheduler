@@ -31,13 +31,13 @@ class DurationMonitor {
      */
     @Synchronized
     fun recordTask(taskName: String, duration: Long) {
-        TaskSchedulerLog.d(
+        TSchedulerLog.d(
             "Executing task %s cost %s ms in thread: %s",
             taskName,
             duration,
             Thread.currentThread().name
         )
-        if (duration >= TSchedulerOptions.taskTimeout) {
+        if (duration >= SchedulerOptions.taskTimeout) {
             toastToWarn("Task %s run too long, cost %s ms", taskName, duration)
         }
         mTaskDurations[taskName] = duration
@@ -65,7 +65,7 @@ class DurationMonitor {
      */
     fun stopRecordProject() {
         mProjectDuration = System.currentTimeMillis() - mProjectStartTime
-        TaskSchedulerLog.d("project execution costs %s ms", mProjectDuration)
+        TSchedulerLog.d("project execution costs %s ms", mProjectDuration)
     }
 
     /**
@@ -81,9 +81,9 @@ class DurationMonitor {
      * @param args args to format
      */
     private fun toastToWarn(formatter: String, vararg args: Any) {
-        if (TSchedulerOptions.toastWarningAvailable) {
+        if (SchedulerOptions.toastWarningAvailable) {
             mWarningHandler.post {
-                TSchedulerOptions.context?.let {
+                SchedulerOptions.context?.let {
                     Toast.makeText(
                         it,
                         formatter.format(args),

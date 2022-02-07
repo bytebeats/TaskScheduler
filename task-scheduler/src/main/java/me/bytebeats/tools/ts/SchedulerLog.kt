@@ -8,9 +8,9 @@ import android.util.Log
  * Quote: Peasant. Educated. Worker
  */
 
-typealias Options = TSchedulerOptions
+typealias Options = SchedulerOptions
 
-interface TaskSchedulerLog {
+interface TSchedulerLog {
     fun d(tag: String?, any: Any)
     fun d(tag: String?, formatter: String, vararg args: Any)
     fun w(tag: String?, any: Any)
@@ -21,8 +21,8 @@ interface TaskSchedulerLog {
     fun print(formatter: String, vararg args: Any)
 
 
-    companion object : TaskSchedulerLog {
-        private const val TAG = "TaskScheduler"
+    companion object : TSchedulerLog {
+        const val TAG = "TaskScheduler"
         private fun getTag(tag: String?): String = tag ?: TAG
         override fun d(tag: String?, any: Any) {
             if (Options.isLoggable) {

@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * E-mail: happychinapc@gmail.com
  * Quote: Peasant. Educated. Worker
  */
-interface TSchedulerOptions {
+interface SchedulerOptions {
     /**
      * Log switch, by default true
      */
@@ -55,7 +55,7 @@ interface TSchedulerOptions {
 
     val toastWarningAvailable: Boolean
 
-    companion object : TSchedulerOptions {
+    companion object : SchedulerOptions {
         private var sIsLoggable = true
         private var mCoreNumber: Int = Runtime.getRuntime().availableProcessors()
         private var mThreadFactory: ThreadFactory? = null
