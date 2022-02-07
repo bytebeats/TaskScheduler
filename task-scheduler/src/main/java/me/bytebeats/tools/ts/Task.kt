@@ -60,6 +60,8 @@ abstract class Task @JvmOverloads constructor(
      */
     private val mPredecessors = mutableSetOf<Task>()
 
+    var durationMonitor: DurationMonitor? = null
+
     //==============================================================================================
     // PUBLIC METHOD
     //==============================================================================================
@@ -209,7 +211,7 @@ abstract class Task @JvmOverloads constructor(
     }
 
     private fun recordTime(duration: Long) {
-        // TODO: TaskExecutorMonitor
+        durationMonitor?.recordTask(name, duration)
     }
 
     companion object {
@@ -248,17 +250,5 @@ abstract class Task @JvmOverloads constructor(
          * @param task
          */
         fun onStart(task: Task)
-    }
-
-    /**
-     * Task State
-     *
-     * @constructor Create empty State
-     */
-    enum class State {
-        IDLE,
-        RUNNING,
-        FINISHED,
-        WAIT,
     }
 }

@@ -93,4 +93,24 @@ class DurationMonitor {
             }
         }
     }
+
+    /**
+     * DurationMonitor Callback
+     *
+     */
+    interface Callback {
+        /**
+         * On task durations invoked
+         * When DurationMonitor#taskDurations() is invoked
+         * @param durations
+         */
+        fun onTaskDurationsInvoked(durations: Map<String, Long>)
+
+        /**
+         * On project duration invoked
+         * When DurationMonitor#projectDuration is invoked
+         * @param duration
+         */
+        fun onProjectDurationInvoked(duration: Long)
+    }
 }
