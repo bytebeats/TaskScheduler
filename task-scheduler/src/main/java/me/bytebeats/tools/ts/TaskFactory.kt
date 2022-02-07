@@ -11,5 +11,5 @@ package me.bytebeats.tools.ts
  * A factory to create a Task with a task name
  */
 interface TaskFactory {
-    fun create(taskName: String): Task
+    fun create(taskName: String): Task?
 }
