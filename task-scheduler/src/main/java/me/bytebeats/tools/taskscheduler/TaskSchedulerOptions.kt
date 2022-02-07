@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger
  * E-mail: happychinapc@gmail.com
  * Quote: Peasant. Educated. Worker
  */
-interface TaskSchedulerConfiguration {
+interface TaskSchedulerOptions {
     /**
      * Log switch, by default true
      */
@@ -53,7 +53,7 @@ interface TaskSchedulerConfiguration {
 
     var context: Application?
 
-    companion object : TaskSchedulerConfiguration {
+    companion object : TaskSchedulerOptions {
         private var sIsLoggable = true
         private var mCoreNumber: Int = Runtime.getRuntime().availableProcessors()
         private var mThreadFactory: ThreadFactory? = null
