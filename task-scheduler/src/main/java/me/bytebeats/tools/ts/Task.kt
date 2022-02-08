@@ -71,23 +71,23 @@ abstract class Task @JvmOverloads constructor(
      *
      * @return
      */
-    fun currentState(): State = mState
+    open fun currentState(): State = mState
 
     /**
      * Is current Task running?
      *
      * @return true means current Task is running or false
      */
-    fun isRunning(): Boolean = mState == State.RUNNING
+    open fun isRunning(): Boolean = mState == State.RUNNING
 
     /**
      * Is current finished?
      *
      * @return true means current Task is finished or false.
      */
-    fun isFinished(): Boolean = mState == State.FINISHED
+    open fun isFinished(): Boolean = mState == State.FINISHED
 
-    fun addOnTaskFinishListener(listener: OnTaskFinishListener) {
+    open fun addOnTaskFinishListener(listener: OnTaskFinishListener) {
         if (mTaskFinishListeners.contains(listener))
             return
         mTaskFinishListeners.add(listener)
@@ -100,7 +100,7 @@ abstract class Task @JvmOverloads constructor(
 
     @Throws(IllegalStateException::class)
     @Synchronized
-    fun start() {
+    open fun start() {
         if (mState != State.IDLE) {
             throw IllegalStateException("You try to run task $name twice, is there a circular dependency?")
         }
@@ -144,7 +144,7 @@ abstract class Task @JvmOverloads constructor(
      * Recycle
      * When current task is finished, release resources
      */
-    internal fun recycle() {
+    internal open fun recycle() {
         mSuccessors.clear()
         mTaskStartListeners.clear()
         mTaskFinishListeners.clear()
@@ -185,7 +185,7 @@ abstract class Task @JvmOverloads constructor(
      *
      * @param task successor task
      */
-    internal fun addSuccessor(task: Task) {
+    internal open fun addSuccessor(task: Task) {
         if (task == this) {
             throw IllegalStateException("A task should not after itself.")
         }
