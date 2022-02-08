@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 rootProject.name = "TaskScheduler"
 include ':app'
 include ':task-scheduler'
+include ':ts-taskparser-ext'

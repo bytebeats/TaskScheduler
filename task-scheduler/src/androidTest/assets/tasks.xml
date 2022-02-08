@@ -1,0 +1,41 @@
+<projects>
+    <project mode="mainProcess">
+        <task name="TaskA" class="com.alibaba.android.alpha.ConfigTest$TaskA" executePriority="8" />
+
+        <task name="TaskB" class="com.alibaba.android.alpha.ConfigTest$TaskB" predecessor="TaskA" />
+
+        <task name="TaskC" class="com.alibaba.android.alpha.ConfigTest$TaskC" executePriority="4"
+            predecessor="TaskA" />
+
+        <task name="TaskD" class="com.alibaba.android.alpha.ConfigTest$TaskD" predecessor="TaskB,TaskC"
+            threadPriority="-5" />
+
+        <task name="TaskE" class="com.alibaba.android.alpha.ConfigTest$TaskE" />
+
+        <!--<task-->
+        <!--name="TaskE"-->
+        <!--class="com.wireless.koalainitializer.ConfigTest$TaskE"/>-->
+
+        <task name="TaskF" class="com.alibaba.android.alpha.ConfigTest$TaskF" mainThread="true"
+            predecessor="TaskC" />
+
+        <task name="TaskG" class="com.alibaba.android.alpha.ConfigTest$TaskG" predecessor="TaskC"
+            threadPriority="-5" />
+
+    </project>
+
+
+    <project mode="secondaryProcess">
+        <task name="TaskA" class="com.alibaba.android.alpha.ConfigTest$TaskA" />
+
+        <task name="TaskB" class="com.alibaba.android.alpha.ConfigTest$TaskB" predecessor="TaskA" />
+
+        <task name="TaskC" class="com.alibaba.android.alpha.ConfigTest$TaskC" executePriority="8"
+            predecessor="TaskA" />
+
+        <task name="TaskD" class="com.alibaba.android.alpha.ConfigTest$TaskD"
+            predecessor="TaskB,TaskC" />
+
+
+    </project>
+</projects>

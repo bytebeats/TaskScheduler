@@ -1,0 +1,74 @@
+{
+  "projects": {
+    "project": [
+      {
+        "-mode": "mainProcess",
+        "task": [
+          {
+            "-name": "TaskA",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskA",
+            "-executePriority": "8"
+          },
+          {
+            "-name": "TaskB",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskB",
+            "-predecessor": "TaskA"
+          },
+          {
+            "-name": "TaskC",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskC",
+            "-executePriority": "4",
+            "-predecessor": "TaskA"
+          },
+          {
+            "-name": "TaskD",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskD",
+            "-threadPriority": "-5",
+            "-predecessor": "TaskB,TaskC"
+          },
+          {
+            "-name": "TaskE",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskE"
+          },
+          {
+            "-name": "TaskF",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskF",
+            "-mainThread": "true",
+            "-predecessor": "TaskC"
+          },
+          {
+            "-name": "TaskG",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskG",
+            "-threadPriority": "-5",
+            "-predecessor": "TaskC"
+          }
+        ]
+      },
+      {
+        "-mode": "secondaryProcess",
+        "task": [
+          {
+            "-name": "TaskA",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskA"
+          },
+          {
+            "-name": "TaskB",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskB",
+            "-predecessor": "TaskA"
+          },
+          {
+            "-name": "TaskC",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskC",
+            "-executePriority": "8",
+            "-predecessor": "TaskA"
+          },
+          {
+            "-name": "TaskD",
+            "-class": "com.alibaba.android.alpha.ConfigTest$TaskD",
+            "-predecessor": "TaskB,TaskC"
+          }
+        ]
+      }
+    ]
+  }
+}
