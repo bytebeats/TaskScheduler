@@ -1,6 +1,8 @@
 package me.bytebeats.tools.ts
 
 import android.app.Application
+import me.bytebeats.tools.ts.parser.ITaskParser
+import me.bytebeats.tools.ts.parser.impl.XmlTaskParser
 import java.util.concurrent.*
 import java.util.concurrent.atomic.AtomicInteger
 
@@ -55,6 +57,8 @@ interface SchedulerOptions {
 
     val toastWarningAvailable: Boolean
 
+    var taskParser: ITaskParser
+
     companion object : SchedulerOptions {
         private var sIsLoggable = true
         private var mCoreNumber: Int = Runtime.getRuntime().availableProcessors()
@@ -63,6 +67,7 @@ interface SchedulerOptions {
         private var mTaskTimeout: Long = 400L
         private var sIsToastWarningEnabled: Boolean = false
         private var mContext: Application? = null
+        private var mTaskParser: ITaskParser? = null
 
         //==============================================================================================
         // PUBLIC API
@@ -152,6 +157,12 @@ interface SchedulerOptions {
             get() = mContext
             set(value) {
                 mContext = value
+            }
+
+        override var taskParser: ITaskParser
+            get() = mTaskParser ?: XmlTaskParser
+            set(value) {
+                mTaskParser = value
             }
 
         //==============================================================================================

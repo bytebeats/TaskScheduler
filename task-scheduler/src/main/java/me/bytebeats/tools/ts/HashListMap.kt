@@ -36,7 +36,7 @@ class HashListMap<K, V> : MutableMap<K, V> {
         )
     }
 
-    fun getValue(key: K): List<V?>? = mInnerMap[key]
+    fun getValue(key: K): List<V>? = mInnerMap[key]
 
     override fun isEmpty(): Boolean = mSize <= 0
 
