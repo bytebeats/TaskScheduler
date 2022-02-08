@@ -6,7 +6,8 @@ package me.bytebeats.tools.ts
  * E-mail: happychinapc@gmail.com
  * Quote: Peasant. Educated. Worker
  */
-class Project : Task(DEFAULT_NAME), Callback {
+class Project private constructor(private var projectName: String = DEFAULT_NAME) :
+    Task(projectName), Callback {
     private var mStartTask: Task? = null
     private var mFinishTask: AnchorTask? = null
     private val mCallbacks = mutableListOf<Callback>()
@@ -86,11 +87,79 @@ class Project : Task(DEFAULT_NAME), Callback {
         mCallbacks.forEach { c -> c.onTaskFinish(taskName) }
     }
 
+    class Builder {
+        private var mCacheTask: Task? = null
+        private var mStartTask: AnchorTask? = null
+        private var mFinishTask: AnchorTask? = null
+        private var mProject: Project? = null
+        private var mDurationMonitor: DurationMonitor? = null
+        private var mTaskStore: TaskStore? = null
+        private var sIsPositionSet: Boolean = true
+
+        init {
+            reset()
+        }
+
+        private fun reset() {
+            mCacheTask = null
+            sIsPositionSet = true
+            mProject = Project()
+            mFinishTask = AnchorTask("TaskScheduler-DefaultFinishTask", false)
+            mFinishTask!!.projectCallback = mProject
+            mStartTask = AnchorTask("TaskScheduler-DefaultStartTask", true)
+            mStartTask!!.projectCallback = mProject
+            mProject!!.setStartTask(mStartTask!!)
+            mProject!!.setFinishTask(mFinishTask!!)
+            mDurationMonitor = DurationMonitor()
+            mProject!!.setDurationMonitor(mDurationMonitor!!)
+            mTaskStore = TaskStore(TaskFactory.DEFAULT)
+        }
+
+        private fun addToRootIfNeed() {
+            if (!sIsPositionSet && mCacheTask != null) {
+                mStartTask?.addSuccessor(mCacheTask!!)
+            }
+        }
+
+        fun withTaskFactory(factory: TaskFactory): Builder {
+            mTaskStore = TaskStore(factory)
+            return this
+        }
+
+        fun setOnProjectCallback(callback: Callback): Builder {
+            mProject?.addProjectCallback(callback)
+            return this
+        }
+
+        fun setOnDurationMonitorCallback(callback: DurationMonitor.Callback): Builder {
+            mProject?.setDurationMonitorCallback(callback)
+            return this
+        }
+
+        fun withName(projectName: String): Builder {
+            mProject?.projectName = projectName
+            return this
+        }
+
+
+
+        fun build(): Project {
+            addToRootIfNeed()
+            val project = mProject
+
+            /**
+             * After create project, reset configurations and be ready to create next one
+             */
+            reset()
+            return project!!
+        }
+    }
+
     internal class AnchorTask(name: String, private val isAnchorTask: Boolean = true) : Task(name) {
-        var projectListener: Callback? = null
+        var projectCallback: Callback? = null
 
         override fun execute() {
-            projectListener?.let {
+            projectCallback?.let {
                 if (isAnchorTask) it.onProjectStart() else it.onProjectFinish()
             }
         }

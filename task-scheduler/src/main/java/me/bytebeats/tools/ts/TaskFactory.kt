@@ -12,4 +12,12 @@ package me.bytebeats.tools.ts
  */
 interface TaskFactory {
     fun create(taskName: String): Task?
+
+    companion object DEFAULT : TaskFactory {
+        override fun create(taskName: String): Task? = object : Task(taskName) {
+            override fun execute() {
+                //do nothing here
+            }
+        }
+    }
 }
