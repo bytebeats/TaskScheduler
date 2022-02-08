@@ -18,6 +18,8 @@ class TaskStore(private val factory: TaskFactory) {
             if (task == null) {
                 throw IllegalArgumentException("Create task fail, there is no task corresponding to the task name. Make sure you have create a task instance in TaskFactory.")
             }
+
+            mTasks[taskName] = task
         }
         return task
     }
