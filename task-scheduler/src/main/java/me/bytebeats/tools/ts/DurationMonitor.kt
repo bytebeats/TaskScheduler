@@ -31,7 +31,7 @@ class DurationMonitor {
      */
     @Synchronized
     fun recordTask(taskName: String, duration: Long) {
-        TSchedulerLog.d(
+        SchedulerLog.d(
             "Executing task %s cost %s ms in thread: %s",
             taskName,
             duration,
@@ -65,7 +65,7 @@ class DurationMonitor {
      */
     fun stopRecordProject() {
         mProjectDuration = System.currentTimeMillis() - mProjectStartTime
-        TSchedulerLog.d("project execution costs %s ms", mProjectDuration)
+        SchedulerLog.d("project execution costs %s ms", mProjectDuration)
     }
 
     /**
@@ -98,7 +98,7 @@ class DurationMonitor {
      * DurationMonitor Callback
      *
      */
-    interface Callback {
+    interface OnMonitorListener {
         /**
          * On task durations invoked
          * When DurationMonitor#taskDurations() is invoked

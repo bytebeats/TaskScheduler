@@ -11,7 +11,7 @@ package me.bytebeats.tools.ts
  * listen to lifecycle of project
  * Note: thread safety should be considered when callback is invoked.
  */
-interface Callback {
+interface OnProjectListener {
     /**
      * On project start
      * start executing project

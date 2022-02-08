@@ -33,7 +33,7 @@ internal fun Closeable?.closeSafely(): Boolean {
             this.close()
             true
         } catch (e: Exception) {
-            TSchedulerLog.e(TSchedulerLog.TAG, e)
+            SchedulerLog.e(SchedulerLog.TAG, e)
             false
         }
 }
@@ -53,7 +53,7 @@ internal fun Cursor?.closeSafely(): Boolean {
             this.close()
             true
         } catch (e: Exception) {
-            TSchedulerLog.e(TSchedulerLog.TAG, e)
+            SchedulerLog.e(SchedulerLog.TAG, e)
             false
         }
 }
@@ -84,7 +84,7 @@ internal fun currentProcessNameFromLinuxFile(): String? {
         fis = FileInputStream(line)
         read = fis.read(buffer)
     } catch (e: Exception) {
-        TSchedulerLog.e(TSchedulerLog.TAG, e)
+        SchedulerLog.e(SchedulerLog.TAG, e)
     } finally {
         fis?.closeSafely()
     }

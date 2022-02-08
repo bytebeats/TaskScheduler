@@ -7,12 +7,12 @@ package me.bytebeats.tools.ts
  * Quote: Peasant. Educated. Worker
  */
 class Project private constructor(private var projectName: String = DEFAULT_NAME) :
-    Task(projectName), Callback {
+    Task(projectName), OnProjectListener {
     private var mStartTask: Task? = null
     private var mFinishTask: AnchorTask? = null
-    private val mCallbacks = mutableListOf<Callback>()
+    private val mListeners = mutableListOf<OnProjectListener>()
     private var mDurationMonitor: DurationMonitor? = null
-    private var mDurationMonitorCallback: DurationMonitor.Callback? = null
+    private var mMonitorListener: DurationMonitor.OnMonitorListener? = null
 
     internal fun setStartTask(task: Task) {
         mStartTask = task
@@ -26,13 +26,13 @@ class Project private constructor(private var projectName: String = DEFAULT_NAME
         mDurationMonitor = monitor
     }
 
-    fun setDurationMonitorCallback(callback: DurationMonitor.Callback) {
-        mDurationMonitorCallback = callback
+    fun setDurationMonitorCallback(listener: DurationMonitor.OnMonitorListener) {
+        mMonitorListener = listener
     }
 
-    fun addProjectCallback(callback: Callback) {
-        if (!mCallbacks.contains(callback)) {
-            mCallbacks.add(callback)
+    fun addProjectListener(listener: OnProjectListener) {
+        if (!mListeners.contains(listener)) {
+            mListeners.add(listener)
         }
     }
 
@@ -62,7 +62,7 @@ class Project private constructor(private var projectName: String = DEFAULT_NAME
 
     override fun recycle() {
         super.recycle()
-        mCallbacks.clear()
+        mListeners.clear()
     }
 
     override fun execute() {
@@ -71,20 +71,20 @@ class Project private constructor(private var projectName: String = DEFAULT_NAME
 
     override fun onProjectStart() {
         mDurationMonitor?.startRecordProject()
-        mCallbacks.forEach { c -> c.onProjectStart() }
+        mListeners.forEach { c -> c.onProjectStart() }
     }
 
     override fun onProjectFinish() {
         mDurationMonitor?.stopRecordProject()
-        mCallbacks.forEach { c -> c.onProjectFinish() }
+        mListeners.forEach { c -> c.onProjectFinish() }
         mDurationMonitor?.let {
-            mDurationMonitorCallback?.onProjectDurationInvoked(it.projectDuration)
-            mDurationMonitorCallback?.onTaskDurationsInvoked(it.taskDurations())
+            mMonitorListener?.onProjectDurationInvoked(it.projectDuration)
+            mMonitorListener?.onTaskDurationsInvoked(it.taskDurations())
         }
     }
 
     override fun onTaskFinish(taskName: String) {
-        mCallbacks.forEach { c -> c.onTaskFinish(taskName) }
+        mListeners.forEach { c -> c.onTaskFinish(taskName) }
     }
 
     class Builder {
@@ -105,9 +105,9 @@ class Project private constructor(private var projectName: String = DEFAULT_NAME
             sIsPositionSet = true
             mProject = Project()
             mFinishTask = AnchorTask("TaskScheduler-DefaultFinishTask", false)
-            mFinishTask!!.projectCallback = mProject
+            mFinishTask!!.projectListener = mProject
             mStartTask = AnchorTask("TaskScheduler-DefaultStartTask", true)
-            mStartTask!!.projectCallback = mProject
+            mStartTask!!.projectListener = mProject
             mProject!!.setStartTask(mStartTask!!)
             mProject!!.setFinishTask(mFinishTask!!)
             mDurationMonitor = DurationMonitor()
@@ -126,13 +126,13 @@ class Project private constructor(private var projectName: String = DEFAULT_NAME
             return this
         }
 
-        fun setOnProjectCallback(callback: Callback): Builder {
-            mProject?.addProjectCallback(callback)
+        fun addOnProjectListener(listener: OnProjectListener): Builder {
+            mProject?.addProjectListener(listener)
             return this
         }
 
-        fun setOnDurationMonitorCallback(callback: DurationMonitor.Callback): Builder {
-            mProject?.setDurationMonitorCallback(callback)
+        fun setOnDurationMonitorCallback(listener: DurationMonitor.OnMonitorListener): Builder {
+            mProject?.setDurationMonitorCallback(listener)
             return this
         }
 
@@ -232,10 +232,10 @@ class Project private constructor(private var projectName: String = DEFAULT_NAME
      * </p>
      */
     internal class AnchorTask(name: String, private val isAnchorTask: Boolean = true) : Task(name) {
-        var projectCallback: Callback? = null
+        var projectListener: OnProjectListener? = null
 
         override fun execute() {
-            projectCallback?.let {
+            projectListener?.let {
                 if (isAnchorTask) it.onProjectStart() else it.onProjectFinish()
             }
         }
