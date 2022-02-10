@@ -133,7 +133,7 @@ abstract class Task @JvmOverloads constructor(
 
     internal fun notifyFinished() {
         if (mSuccessors.isNotEmpty()) {
-            // TODO: sort mSuccessors
+            mSuccessors.sort()
             mSuccessors.forEach { s -> s.onPredecessorFinished(this) }
         }
         mTaskFinishListeners.forEach { l -> l.onFinish(name) }

@@ -31,5 +31,4 @@ object JsonTaskParser : ITaskParser {
         }
         return builder.toString()
     }
-
 }
